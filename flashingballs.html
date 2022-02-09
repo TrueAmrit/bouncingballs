@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<!-- <head>
+  <tittle>
+  </tittle>
+
+</head> -->
+<style>
+  body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+</style>
+
+<body>
+  <canvas id="canvas">
+  </canvas>
+  <script>
+
+    const canvas = document.querySelector("#canvas");
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+    const c = canvas.getContext('2d');
+
+    class Circle {
+      constructor(x, y, xspeed, yspeed, r) {
+        this.x = x;
+        this.y = y;
+        this.xspeed = xspeed;
+        this.yspeed = yspeed;
+        this.r = r;
+        // this.c = c;
+        // this.f = f;
+      };
+
+      draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.r, 0, Math.PI * 2, false);
+        c.fillStyle = 'hsl('+Math.random()*360+',100%,50%)';
+        c.fill();
+        c.stroke();
+      }
+
+      bounce() {
+        if (this.x > canvas.width - this.r || this.x < 0 + this.r) {
+          this.xspeed = -this.xspeed;
+        }
+        if (this.y > canvas.height - this.r || this.y < 0 + this.r) {
+          this.yspeed = -this.yspeed;
+        }
+
+        this.x += this.xspeed;
+        this.y += this.yspeed;
+      }
+    }
+
+    const CArray = [];
+
+    for (let i = 0; i < 100; i++) {
+
+        r = Math.random() * (70 - 30) + 10,
+        x = Math.random() * (canvas.width - r * 2) + r,
+        y = Math.random() * (canvas.height - r * 2) + r,
+        xspeed = (Math.random() - 0.5) * 8,
+        yspeed = (Math.random() - 0.5) * 8;
+        // red = Math.random() * 255,
+        // blue = Math.random() * 255,
+        // green = Math.random() * 255,
+        // alpha = Math.random() * (0.4 - 0.1) + 0.4;
+        // j = Math.random() * 255,
+        // b = Math.random() * 255,
+        // g = Math.random() * 255,
+        // a = Math.random() * (0.4 - 0.1) + 0.4;
+
+    //   let c = `rgba(${red}, ${blue}, ${green}, ${alpha})`
+    //   let f = `rgba(${j}, ${b}, ${g}, ${a})`
+
+      const myCircle = new Circle(x, y, xspeed, yspeed, r);
+
+      CArray.push(myCircle);
+
+    }
+
+
+    const animate = function () {
+      requestAnimationFrame(animate);
+      c.clearRect(0, 0, canvas.width, canvas.height);
+      CArray.forEach(circle => {
+        circle.draw();
+        circle.bounce();
+      })
+    }
+    animate()
+
+  </script>
+</body>
+
+</html>
